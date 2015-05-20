@@ -45,3 +45,9 @@ func! DeleteTrailingWS()
   exe "normal `z"
 endfunc
 autocmd BufWrite * :call DeleteTrailingWS()
+
+let mapleader=" "
+
+" Terminal emulator
+tnoremap <Leader>e <C-\><C-n>
+" This maps Leader + e to exit terminal mode.
