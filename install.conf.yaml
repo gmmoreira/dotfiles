@@ -1,3 +1,7 @@
-- clean: []
-- link: {}
-- shell: []
+- clean: ['~']
+- link:
+    ~/.nvimrc: nvimrc
+    ~/.tmux.conf: tmux.conf
+- shell:
+  - [git submodule update --quiet --init --recursive, Installing submodules]
+  - [mkdir -p ~/.nvim, Creating nvim directory.]
