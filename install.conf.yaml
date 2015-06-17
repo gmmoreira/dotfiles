@@ -2,6 +2,7 @@
 - link:
     ~/.nvimrc: nvimrc
     ~/.tmux.conf: tmux.conf
+    ~/.zshrc_local: zshrc_local
 - shell:
   - [git submodule update --quiet --init --recursive, Installing submodules]
   - [mkdir -p ~/.nvim, Creating nvim directory.]

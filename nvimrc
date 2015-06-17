@@ -14,6 +14,7 @@ call plug#end()
 " Colorscheme
 syntax enable
 set background=dark
+let t_Co=16
 let g:solarized_termcolors=16
 colorscheme solarized
 
