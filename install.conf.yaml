@@ -1,9 +1,7 @@
 - clean: ['~']
 - link:
-    ~/.nvimrc: nvimrc
     ~/.vimrc: vimrc
     ~/.tmux.conf: tmux.conf
 - shell:
   - [git submodule update --quiet --init --recursive, Installing submodules]
-  - [mkdir -p ~/.nvim/autoload, Creating nvim directory.]
   - [mkdir -p ~/.vim/autoload, Creating vim directory.]
