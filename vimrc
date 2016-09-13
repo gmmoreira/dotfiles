@@ -39,6 +39,7 @@ au BufEnter *.rb syn match error contained "\<debugger\>"
 
 let g:netrw_liststyle = 0
 let g:airline#extensions#tabline#enabled = 1
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
 nnoremap <Leader>fu :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
