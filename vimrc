@@ -22,10 +22,11 @@ call plug#end()
 
 filetype plugin indent on
 
-set background=dark
-colorscheme Tomorrow-Night
 syntax enable
 syntax sync fromstart
+
+set background=dark
+colorscheme hybrid
 
 let mapleader = " "
 
@@ -57,8 +58,10 @@ map <Leader>bd :bd<CR>
 
 nnoremap <Tab><Tab> :Explore<CR>
 
+if !has('nvim')
+  set ttyscroll=3
+endif
 set ttyfast
-set ttyscroll=3
 set lazyredraw
 set expandtab
 set shiftwidth=2
@@ -75,3 +78,4 @@ set noro
 set encoding=utf-8
 set colorcolumn=90
 set showmatch
+set noswapfile
