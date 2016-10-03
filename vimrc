@@ -73,5 +73,7 @@ set incsearch   "find the next match as we type the search
 set hlsearch    "hilight searches by default
 set noro
 set encoding=utf-8
-set colorcolumn=90
+set colorcolumn=120
 set showmatch
+set noswapfile
+set backspace=indent,eol,start
