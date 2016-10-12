@@ -26,7 +26,7 @@ syntax enable
 syntax sync fromstart
 
 set background=dark
-colorscheme hybrid
+colorscheme Tomorrow-Night
 
 let mapleader = " "
 

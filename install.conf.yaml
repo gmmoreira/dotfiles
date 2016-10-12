@@ -5,3 +5,5 @@
 - shell:
   - [git submodule update --quiet --init --recursive, Installing submodules]
   - [mkdir -p ~/.vim/autoload, Creating vim directory.]
+  - ["sudo add-apt-repository ppa:git-core/ppa", Adding git repository]
+  - ["sudo add-apt-repository ppa:jonathonf/vim", Adding vim8 repository]
