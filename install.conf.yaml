@@ -2,6 +2,9 @@
 - link:
     ~/.vimrc: vimrc
     ~/.tmux.conf: tmux.conf
+    ~/.gitmessage: gitmessage
+    ~/.git_template: git_template
+    ~/.ctags: ctags
 - shell:
   - [git submodule update --quiet --init --recursive, Installing submodules]
   - [mkdir -p ~/.vim/autoload, Creating vim directory.]

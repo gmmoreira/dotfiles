@@ -12,12 +12,14 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-endwise'
 Plug 'thoughtbot/vim-rspec'
 Plug 'kien/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'flazz/vim-colorschemes'
 Plug 'vim-airline/vim-airline'
+Plug 'mileszs/ack.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -43,6 +45,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
 nnoremap <Leader>fu :CtrlPFunky<Cr>
+nnoremap <Leader>tag :CtrlPTag<Cr>
 " narrow the list down with a word under cursor
 nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 
@@ -80,3 +83,4 @@ set colorcolumn=120
 set showmatch
 set noswapfile
 set backspace=indent,eol,start
+set tags=.git/tags;
