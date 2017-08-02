@@ -39,8 +39,10 @@ au BufWritePost .vimrc so $MYVIMRC
 " Make those debugger statements painfully obvious
 au BufEnter *.rb syn match error contained "\<binding.pry\>"
 au BufEnter *.rb syn match error contained "\<debugger\>"
+au BufEnter *.js syn match error contained "\<debugger\>"
 
 let g:netrw_liststyle = 0
+let g:netrw_keepdir = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
@@ -84,3 +86,7 @@ set showmatch
 set noswapfile
 set backspace=indent,eol,start
 set tags=.git/tags;
+
+if !empty(glob('~/.vimrc.local'))
+  source ~/.vimrc.local
+endif
