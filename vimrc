@@ -20,6 +20,7 @@ Plug 'tacahiroy/ctrlp-funky'
 Plug 'flazz/vim-colorschemes'
 Plug 'vim-airline/vim-airline'
 Plug 'mileszs/ack.vim'
+Plug 'junegunn/vim-easy-align'
 call plug#end()
 
 filetype plugin indent on
@@ -42,7 +43,6 @@ au BufEnter *.rb syn match error contained "\<debugger\>"
 au BufEnter *.js syn match error contained "\<debugger\>"
 
 let g:netrw_liststyle = 0
-let g:netrw_keepdir = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
@@ -63,6 +63,29 @@ map <Leader>bd :bd<CR>
 
 nnoremap <Tab><Tab> :Explore<CR>
 
+" Vim-easy-align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+if executable('alt')
+  " Run a given vim command on the results of alt from a given path.
+  " See usage below.
+  function! AltCommand(path, vim_command)
+    let l:alternate = system("find . -path ./_site -prune -or -path ./target -prune -or -path ./.DS_Store -prune -or -path ./build -prune -or -path ./Carthage -prune -or -path tags -prune -or -path ./tmp -prune -or -path ./log -prune -or -path ./.git -prune -or -type f -print | alt -f - " . a:path)
+    if empty(l:alternate)
+      echo "No alternate file for " . a:path . " exists!"
+    else
+      exec a:vim_command . " " . l:alternate
+    endif
+  endfunction
+
+  " Find the alternate file for the current path and open it
+  nnoremap <leader>a :w<cr>:call AltCommand(expand('%'), ':e')<cr>
+endif
+
 if !has('nvim')
   set ttyscroll=3
 endif
@@ -81,7 +104,7 @@ set incsearch   "find the next match as we type the search
 set hlsearch    "hilight searches by default
 set noro
 set encoding=utf-8
-set colorcolumn=120
+set colorcolumn=130
 set showmatch
 set noswapfile
 set backspace=indent,eol,start
