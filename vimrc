@@ -14,12 +14,15 @@ Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-sensible'
 Plug 'thoughtbot/vim-rspec'
 Plug 'kien/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'flazz/vim-colorschemes'
 Plug 'vim-airline/vim-airline'
 Plug 'mileszs/ack.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'luochen1990/rainbow'
 call plug#end()
 
 filetype plugin indent on
@@ -61,7 +64,25 @@ map <Leader>a :call RunAllSpecs()<CR>
 
 map <Leader>bd :bd<CR>
 
+" moving lines up and down
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
 nnoremap <Tab><Tab> :Explore<CR>
+
+" vim-easy-align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" Raindow parenthesis
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
 if !has('nvim')
   set ttyscroll=3
