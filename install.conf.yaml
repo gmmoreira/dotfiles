@@ -1,6 +1,7 @@
 - clean: ['~']
 - link:
     ~/.vimrc: vimrc
+    ~/.spacemacs: spacemacs
     ~/.tmux.conf: tmux.conf
     ~/.gitmessage: gitmessage
     ~/.git_template: git_template
