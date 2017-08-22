@@ -8,21 +8,21 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-sensible'
-Plug 'thoughtbot/vim-rspec'
-Plug 'kien/ctrlp.vim'
-Plug 'tacahiroy/ctrlp-funky'
 Plug 'flazz/vim-colorschemes'
-Plug 'vim-airline/vim-airline'
-Plug 'mileszs/ack.vim'
 Plug 'junegunn/vim-easy-align'
+Plug 'kien/ctrlp.vim'
 Plug 'luochen1990/rainbow'
+Plug 'mileszs/ack.vim'
+Plug 'tacahiroy/ctrlp-funky'
+Plug 'tommcdo/vim-exchange'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-vinegar'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-ruby/vim-ruby'
 call plug#end()
 
 filetype plugin indent on
@@ -30,10 +30,13 @@ filetype plugin indent on
 syntax enable
 syntax sync fromstart
 
-set background=dark
-colorscheme Tomorrow-Night
+if has('gui_running')
+  set background=light
+  colorscheme solarized
+  set guifont=Source\ Code\ Pro:h13
+endif
 
-let mapleader = " "
+let mapleader = ' '
 
 set exrc
 
@@ -56,12 +59,10 @@ nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 "save pressing Esc twice
 map <Esc><Esc> :w<CR>
 
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
 
 map <Leader>bd :bd<CR>
+map <Leader>bp :bprevious<CR>
+map <Leader>bn :bnext<CR>
 
 " moving lines up and down
 nnoremap <A-j> :m .+1<CR>==
