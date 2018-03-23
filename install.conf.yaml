@@ -1,6 +1,7 @@
 - clean: ['~']
 - link:
     ~/.vimrc: vimrc
+    ~/.config/nvim/init.vim: init.vim
     ~/.spacemacs: spacemacs
     ~/.tmux.conf: tmux.conf
     ~/.gitmessage: gitmessage
@@ -9,6 +10,4 @@
     ~/.Xresources: Xresources
 - shell:
   - [git submodule update --quiet --init --recursive, Installing submodules]
-  - [mkdir -p ~/.vim/autoload, Creating vim directory.]
-  - ["sudo add-apt-repository ppa:git-core/ppa", Adding git repository]
-  - ["sudo add-apt-repository ppa:jonathonf/vim", Adding vim8 repository]
+  - [mkdir -p ~/.config/nvim]

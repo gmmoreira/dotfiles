@@ -3,7 +3,7 @@ set nocompatible
 
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
@@ -33,7 +33,14 @@ syntax sync fromstart
 if has('gui_running')
   set background=light
   colorscheme solarized
-  set guifont=Source\ Code\ Pro:h13
+  set guifont=Source\ Code\ Pro
+endif
+
+if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://sunaku.github.io/vim-256color-bce.html
+  set t_ut=
 endif
 
 let mapleader = ' '
@@ -119,7 +126,6 @@ set incsearch   "find the next match as we type the search
 set hlsearch    "hilight searches by default
 set noro
 set encoding=utf-8
-set colorcolumn=130
 set showmatch
 set noswapfile
 set backspace=indent,eol,start
