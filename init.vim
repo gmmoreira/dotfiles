@@ -22,6 +22,9 @@ Plug 'junegunn/limelight.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'chriskempson/base16-vim'
 
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'justinmk/vim-dirvish'
+
 " Initialize plugin system
 call plug#end()
 
@@ -32,10 +35,11 @@ endif
 
 let mapleader = ' '
 
-augroup 'whitespace'
-  autocmd!
-  autocmd BufWrite * StripWhitespace
-augroup end
+let g:strip_whitespace_on_save = 1
+" augroup 'whitespace'
+"   autocmd!
+"   autocmd BufWrite * StripWhitespace
+" augroup end
 
 nmap <ESC> :nohl<CR>
 inoremap jk <ESC>
@@ -47,6 +51,8 @@ nmap <leader>mtb :Rails<CR>
 nnoremap <leader>fs :w<CR>
 nnoremap <leader>pt :NERDTreeToggle<CR>
 nnoremap <leader>mt<TAB> :A<CR>
+nnoremap <leader>mx' cs"'
+nnoremap <leader>mx" cs'"
 nnoremap <leader>bb :ls<CR>
 nnoremap <leader>bd :bd<CR>
 nnoremap <leader>bn :bn<CR>
@@ -58,9 +64,8 @@ nnoremap <leader>feR :so $MYVIMRC<CR>
 nnoremap <leader>fD :bwipeout<CR>
 nnoremap <leader>wd <C-w>q
 nnoremap <leader>qq :wqa<CR>
-nmap <leader>xa :EasyAlign<CR>
-xmap <leader>xa :EasyAlign<CR>
-nmap <leader>xs :sort<CR>
+vmap <leader>xa :EasyAlign<CR>
+vmap <leader>xs :sort<CR>
 nnoremap <leader>wc :Goyo<CR>
 nmap <Leader>l <Plug>(Limelight)
 xmap <Leader>l <Plug>(Limelight)
