@@ -3,7 +3,7 @@
     ~/.vimrc: vimrc
     ~/.config/nvim/init.vim: init.vim
     ~/.spacemacs: spacemacs
-    ~/.tmux.conf: tmux.conf
+    ~/.tmux.conf: .tmux/.tmux.conf
     ~/.gitmessage: gitmessage
     ~/.git_template: git_template
     ~/.ctags: ctags
@@ -17,3 +17,6 @@
   -
     command: '[ ! -d "~/.vim/autoload/plug.vim" ] && curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     description: Cloning plug.vim for Vim
+  -
+    command: '[ ! -f "~/.tmux.conf.local" ] && cp .tmux/.tmux.conf.local ~/.tmux.conf.local'
+    description: Creating local tmux conf

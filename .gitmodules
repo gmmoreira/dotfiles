@@ -7,3 +7,6 @@
 [submodule "powerline"]
 	path = powerline
 	url = https://github.com/powerline/powerline
+[submodule ".tmux"]
+	path = .tmux
+	url = https://github.com/gpakosz/.tmux
