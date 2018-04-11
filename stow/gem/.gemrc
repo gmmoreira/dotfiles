@@ -1,0 +1,5 @@
+sources:
+  - https://gems.locaweb.com.br
+  - https://rubygems.org
+gem: --no-document
+verbose: true
