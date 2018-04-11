@@ -10,3 +10,6 @@
 [submodule ".tmux"]
 	path = .tmux
 	url = https://github.com/gpakosz/.tmux
+[submodule "stow/tmux"]
+	path = stow/tmux
+	url = https://github.com/gpakosz/.tmux
