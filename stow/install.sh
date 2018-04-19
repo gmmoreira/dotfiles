@@ -10,7 +10,7 @@ command_exists "git" ||  { echo "git command not available"; exit 1; }
 
 stow -t $HOME \
   -v 2 \
-  -S gem tmux
+  -S gem tmux ctags git
 
 # Vim
 if command_exists "nvim"; then

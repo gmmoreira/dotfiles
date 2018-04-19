@@ -24,6 +24,7 @@ Plug 'chriskempson/base16-vim'
 
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'justinmk/vim-dirvish'
+Plug 'ctrlpvim/ctrlp.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -65,6 +66,9 @@ nnoremap <leader>fR :Rename<SPACE>
 nnoremap <leader>fed :e $MYVIMRC<CR>
 nnoremap <leader>feR :so $MYVIMRC<CR>
 nnoremap <leader>fD :bwipeout<CR>
+nnoremap <leader>pg :CtrlPTag<CR>
+nnoremap <leader>pf :CtrlP<CR>
+nnoremap <leader>/ :CtrlP<CR>
 nnoremap <leader>wd <C-w>q
 nnoremap <leader>qq :wqa<CR>
 vmap <leader>xa :EasyAlign<CR>
@@ -79,11 +83,17 @@ autocmd! User GoyoLeave Limelight!
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
 
+let g:gutentags_file_list_command = {
+      \ 'markers': {
+      \ '.git': 'git ls-files',
+      \ },
+      \ }
+let g:gutentags_generate_on_new = 1
+
 set expandtab
 set shiftwidth=2
 set softtabstop=2
 set tags=./tags,tags,.git/tags
-set clipboard+=unnamedplus
 
 if executable('rg')
   " --files: List files that would be searched but do not search

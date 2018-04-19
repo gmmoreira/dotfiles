@@ -1,0 +1,9 @@
+[user]
+  name = Guilherme Moreira
+  email = guilherme.moreira@locaweb.com.br
+[includeIf "gitdir:~/workspace/"]
+  path = .gitconfig-personal
+[includeIf "gitdir:~/workspace/work/"]
+  path = .gitconfig-work
+[core]
+  excludesFile = ~/.gitignore
