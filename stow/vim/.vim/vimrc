@@ -37,10 +37,9 @@ endif
 let mapleader = ' '
 
 let g:strip_whitespace_on_save = 1
-" augroup 'whitespace'
-"   autocmd!
-"   autocmd BufWrite * StripWhitespace
-" augroup end
+
+set autoindent
+filetype plugin indent on
 
 nmap <ESC> :nohl<CR>
 inoremap jk <ESC>
