@@ -23,6 +23,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'chriskempson/base16-vim'
 
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'vim-airline/vim-airline'
 Plug 'justinmk/vim-dirvish'
 Plug 'ctrlpvim/ctrlp.vim'
 
@@ -88,10 +89,16 @@ let g:gutentags_file_list_command = {
       \ },
       \ }
 let g:gutentags_generate_on_new = 1
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](vendor/bundle)|(\.(git|hg|svn))$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+  \ }
 
 set expandtab
 set shiftwidth=2
 set softtabstop=2
+set number
 set tags=./tags,tags,.git/tags
 
 if executable('rg')

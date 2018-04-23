@@ -1,6 +1,6 @@
 [user]
   name = Guilherme Moreira
-  email = guilherme.moreira@locaweb.com.br
+  email = guilhermerx7@gmail.com
 [includeIf "gitdir:~/workspace/"]
   path = .gitconfig-personal
 [includeIf "gitdir:~/workspace/work/"]
