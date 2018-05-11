@@ -88,6 +88,8 @@ autocmd! User GoyoLeave Limelight!
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
 
+set statusline+=%{gutentags#statusline()}
+let g:gutentags_ctags_tagfile = '.tags'
 let g:gutentags_file_list_command = {
       \ 'markers': {
       \ '.git': 'git ls-files',
@@ -104,7 +106,7 @@ set expandtab
 set shiftwidth=2
 set softtabstop=2
 set number
-set tags=./tags,tags,.git/tags
+set tags=./tags,.tags,.git/tags
 
 if executable('rg')
   " --files: List files that would be searched but do not search
