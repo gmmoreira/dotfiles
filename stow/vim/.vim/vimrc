@@ -1,17 +1,19 @@
-autocmd!
-
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
 
-Plug 'vim-ruby/vim-ruby'
+Plug 'qpkorr/vim-bufkill'
+
 Plug 'tpope/vim-rails'
+Plug 'vim-ruby/vim-ruby'
 
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -24,9 +26,7 @@ Plug 'chriskempson/base16-vim'
 
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'vim-airline/vim-airline'
-Plug 'justinmk/vim-dirvish'
 Plug 'ctrlpvim/ctrlp.vim'
-
 " Initialize plugin system
 call plug#end()
 
@@ -39,6 +39,10 @@ let mapleader = ' '
 
 let g:strip_whitespace_on_save = 1
 
+" Disable netrw
+let g:loaded_netrw       = 1
+let g:loaded_netrwPlugin = 1
+
 set autoindent
 filetype plugin indent on
 
@@ -49,6 +53,7 @@ if has("nvim")
   tnoremap <Esc> <C-\><C-n>
 endif
 
+" Spacemacs like mappings
 nnoremap <leader>mrrf :!bundle exec rubocop %<CR>
 nnoremap <leader>mrrF :!bundle exec rubocop -a %<CR>
 nnoremap <leader>mtb :Rails<CR>
@@ -58,7 +63,7 @@ nnoremap <leader>mt<TAB> :A<CR>
 nnoremap <leader>mx' cs"'
 nnoremap <leader>mx" cs'"
 nnoremap <leader>bb :ls<CR>
-nnoremap <leader>bd :bd<CR>
+nnoremap <leader>bd :BD<CR>
 nnoremap <leader>bn :bn<CR>
 nnoremap <leader>bp :bp<CR>
 nnoremap <leader>ff :Files<CR>
@@ -68,7 +73,7 @@ nnoremap <leader>feR :so $MYVIMRC<CR>
 nnoremap <leader>fD :bwipeout<CR>
 nnoremap <leader>pg :CtrlPTag<CR>
 nnoremap <leader>pf :CtrlP<CR>
-nnoremap <leader>/ :CtrlP<CR>
+nnoremap <leader>/ :Rg<CR>
 nnoremap <leader>wd <C-w>q
 nnoremap <leader>qq :wqa<CR>
 vnoremap <leader>xa :EasyAlign<CR>

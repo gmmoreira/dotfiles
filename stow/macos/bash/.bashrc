@@ -66,6 +66,12 @@ if [ -x brew ]; then
   fi
 fi
 
+if $(command -v fasd > /dev/null 2>&1); then
+  eval "$(fasd --init auto)"
+  alias v='f -e vim'
+  alias vd='d -e vim'
+fi
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
