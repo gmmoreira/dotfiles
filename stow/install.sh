@@ -18,7 +18,7 @@ required_commands=("stow" "curl" "git")
 
 for c in "$required_commands"
 do
-  command_exists "$c" || { echo "${c} command not available"; exit 1; }
+  command_exists "$c" || { echo "$c command not available"; exit 1; }
 done
 
 packages=("gem" "tmux" "ctags" "git")
@@ -36,7 +36,7 @@ if command_exists "nvim"; then
   fi
 
   mkdir -p ~/.config/nvim
-  stow -t "${HOME}/.config/nvim" \
+  stow -t "$HOME/.config/nvim" \
     -d vim/.config \
     -v "$stow_verbosity" \
     nvim
@@ -65,7 +65,7 @@ if [[ ! -d ~/.rbenv ]]; then
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv
   pushd ~/.rbenv && src/configure && make -C src
   popd
-  export PATH="${HOME}/.rbenv/bin:${PATH}"
+  export PATH="$HOME/.rbenv/bin:$PATH"
   mkdir -p "$(rbenv root)"/plugins
   git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
 fi
@@ -75,9 +75,9 @@ if [[ ! -s ~/.sdkman/bin/sdkman-init.sh ]]; then
   curl -s "https://get.sdkman.io" | bash
 fi
 
-sys_name="`uname -s`"
+sys_name="$(uname -s)"
 case "$sys_name" in
   Darwin*)    pushd ./macos; ./install.sh; popd;;
   Linux*)     pushd ./linux; ./install.sh; popd;;
-  *)          echo "${sys_name} is not configured";;
+  *)          echo "$sys_name is not configured";;
 esac
