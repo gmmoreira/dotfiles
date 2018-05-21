@@ -1,16 +1,31 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# https://github.com/anordal/shellharden/blob/master/how_to_do_things_safely_in_bash.md
+if test "$BASH" = "" || "$BASH" -uc "a=();true \"\${a[@]}\"" 2>/dev/null; then
+    # Bash 4.4, Zsh
+    set -euo pipefail
+else
+    # Bash 4.3 and older chokes on empty arrays with set -u.
+    set -eo pipefail
+fi
+shopt -s nullglob globstar
 
 function command_exists() {
-  command -v $1 > /dev/null 2>&1
+  command -v "$1" > /dev/null 2>&1
 }
 
-command_exists "stow" || { echo "stow command not available"; exit 1; }
-command_exists "curl" || { echo "curl command not available"; exit 1; }
-command_exists "git" ||  { echo "git command not available"; exit 1; }
+required_commands=("stow" "curl" "git")
 
-stow -t $HOME \
-  -v 2 \
-  -S gem tmux ctags git
+for c in "$required_commands"
+do
+  command_exists "$c" || { echo "${c} command not available"; exit 1; }
+done
+
+packages=("gem" "tmux" "ctags" "git")
+stow_verbosity=2
+stow -t "$HOME" \
+  -v "$stow_verbosity" \
+  -S "${packages[@]}"
 
 # Vim
 if command_exists "nvim"; then
@@ -21,9 +36,9 @@ if command_exists "nvim"; then
   fi
 
   mkdir -p ~/.config/nvim
-  stow -t ~/.config/nvim \
+  stow -t "${HOME}/.config/nvim" \
     -d vim/.config \
-    -v 2 \
+    -v "$stow_verbosity" \
     nvim
 
 fi
@@ -34,8 +49,8 @@ if command_exists "vim"; then
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   fi
 
-  stow -t ~/ \
-    -v 2 \
+  stow -t "$HOME" \
+    -v "$stow_verbosity" \
     --ignore .config \
     vim
 fi
@@ -50,7 +65,7 @@ if [[ ! -d ~/.rbenv ]]; then
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv
   pushd ~/.rbenv && src/configure && make -C src
   popd
-  export PATH="$HOME/.rbenv/bin:$PATH"
+  export PATH="${HOME}/.rbenv/bin:${PATH}"
   mkdir -p "$(rbenv root)"/plugins
   git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
 fi
@@ -60,10 +75,9 @@ if [[ ! -s ~/.sdkman/bin/sdkman-init.sh ]]; then
   curl -s "https://get.sdkman.io" | bash
 fi
 
-sys_name=`uname -s`
-
-case $sys_name in
+sys_name="`uname -s`"
+case "$sys_name" in
   Darwin*)    pushd ./macos; ./install.sh; popd;;
   Linux*)     pushd ./linux; ./install.sh; popd;;
-  *)          echo "$sys_name is not configured";;
+  *)          echo "${sys_name} is not configured";;
 esac
