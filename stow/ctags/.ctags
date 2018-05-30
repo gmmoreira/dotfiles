@@ -16,6 +16,9 @@
 --exclude=bower_components
 --exclude=node_modules
 --exclude=vendor
+--exclude=.git
+--exclude=log
+--exclude=tmp
 --languages=-javascript
 --langdef=js
 --langmap=js:.js
