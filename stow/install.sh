@@ -21,7 +21,7 @@ do
   command_exists "$c" || { echo "$c command not available"; exit 1; }
 done
 
-packages=("gem" "tmux" "ctags" "git")
+packages=("gem" "tmux" "ctags" "git" "intellij")
 stow_verbosity=2
 stow -t "$HOME" \
   -v "$stow_verbosity" \
