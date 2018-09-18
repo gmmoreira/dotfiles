@@ -1,7 +1,11 @@
+# Source global definitions
+[[ -f /etc/bashrc ]] && source /etc/bashrc
+
 # Exports
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 [[ -d ~/.rbenv/bin ]] && export PATH="$HOME/.rbenv/bin:$PATH"
+[[ -d ~/.local/bin ]] && export PATH="$HOME/.local/bin:$PATH"
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -51,7 +55,7 @@ GIT_PROMPT_ONLY_IN_REPO=1
 # GIT_PROMPT_THEME=Custom # use custom theme specified in file GIT_PROMPT_THEME_FILE (default ~/.git-prompt-colors.sh)
 # GIT_PROMPT_THEME_FILE=~/.git-prompt-colors.sh
 # GIT_PROMPT_THEME=Solarized # use theme optimized for solarized color scheme
-GIT_PROMPT_THEME=Ubuntu
+GIT_PROMPT_THEME=Solarized
 source ~/.bash-git-prompt/gitprompt.sh
 
 if [ -x brew ]; then
@@ -79,3 +83,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 if command -v yarn > /dev/null 2>&1; then
   export PATH="$(yarn global bin):$PATH"
 fi
+
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash

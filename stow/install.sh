@@ -21,6 +21,7 @@ do
   command_exists "$c" || { echo "$c command not available"; exit 1; }
 done
 
+local_dir="${HOME}/.local"
 packages=("gem" "tmux" "ctags" "git" "intellij")
 stow_verbosity=2
 stow -t "$HOME" \
@@ -69,6 +70,7 @@ if [[ ! -d ~/.rbenv ]]; then
   mkdir -p "$(rbenv root)"/plugins
   git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
 fi
+[[ -f "${local_dir}/bin/rb" ]] || { curl https://raw.githubusercontent.com/thisredone/rb/master/rb -o "${local_dir}/bin/rb" && chmod +x "${local_dir}/bin/rb"; }
 
 # Java
 if [[ ! -s ~/.sdkman/bin/sdkman-init.sh ]]; then
@@ -81,3 +83,5 @@ case "$sys_name" in
   Linux*)     pushd ./linux; ./install.sh; popd;;
   *)          echo "$sys_name is not configured";;
 esac
+
+mkdir -p ~/workspace/work
