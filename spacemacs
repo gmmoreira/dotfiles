@@ -75,7 +75,12 @@ This function should only modify configuration layer settings."
          plantuml-jar-path "~/.local/opt/plantuml.jar"
          org-plantuml-jar-path "~/.local/opt/plantuml.jar")
        markdown
-       ;; org
+       (org :variables
+         org-projectile-file "TODOs.org"
+         org-enable-org-journal-support t
+         org-want-todo-bindings t
+         )
+       spacemacs-org
        ;; syntax-checking
        ;; version-control
        )
@@ -91,6 +96,7 @@ This function should only modify configuration layer settings."
     '(
        activity-watch-mode
        drag-stuff
+       org-roam
        )
 
    ;; A list of packages that cannot be updated.
@@ -519,6 +525,12 @@ before packages are loaded."
   (drag-stuff-mode t)
   (global-set-key (kbd "C-S-k") 'drag-stuff-up)
   (global-set-key (kbd "C-S-j") 'drag-stuff-down)
+  (setq
+    org-agenda-file-regexp "\\`[^.].*\\.org'\\|[0-9]+$"
+    org-journal-dir "~/org/journal"
+    org-directory "~/org"
+    org-agenda-files '("~/org/" "~/org/journal/")
+    )
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
