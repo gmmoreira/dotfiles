@@ -41,10 +41,13 @@ This function should only modify configuration layer settings."
        ;; auto-completion
        ;; better-defaults
        (ruby :variables
+         ruby-enable-enh-ruby-mode t
          ruby-version-manager 'rbenv
          ruby-backend 'lsp
          ruby-enable-enh-ruby-mode nil
-         ruby-test-runner 'rspec)
+         ruby-test-runner 'rspec
+         ruby-insert-encoding-magic-comment nil
+         enh-ruby-add-encoding-comment-on-save nil)
        ruby-on-rails
        crystal
        dotnet
@@ -79,6 +82,8 @@ This function should only modify configuration layer settings."
          org-projectile-file "TODOs.org"
          org-enable-org-journal-support t
          org-want-todo-bindings t
+         org-enable-github-support t
+         org-enable-hugo-support t
          )
        spacemacs-org
        ;; syntax-checking
@@ -521,15 +526,60 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (setq ruby-insert-encoding-magic-comment nil)
   (drag-stuff-mode t)
+  ; Keybindings
   (global-set-key (kbd "C-S-k") 'drag-stuff-up)
   (global-set-key (kbd "C-S-j") 'drag-stuff-down)
+  (spacemacs/set-leader-keys-for-major-mode 'org-mode "o!" 'org-time-stamp-inactive)
+  ; Org-roam
+  (use-package org-roam
+    :after org
+    :hook (org-mode . org-roam-mode)
+    :custom
+    (org-roam-directory "~/org/roam/")
+    (org-roam-completion-system 'helm)
+    :bind
+    ("C-c n l" . org-roam)
+    ("C-c n f" . org-roam-find-file)
+    ("C-c n i" . org-roam-insert)
+    ("C-c n g" . org-roam-graph-show)
+    ("C-c n j" . org-journal-new-entry))
+  (require 'org-roam-protocol)
+  (spacemacs/set-leader-keys
+    "ori" 'org-roam-insert
+    "ort" 'org-journal-open-current-journal-file
+    "orl" 'org-roam
+    "org" 'org-roam-graph
+    "orbb" 'org-roam-switch-to-buffer
+    ; journal
+    "orjj" 'org-journal-new-entry
+    "orjt" 'org-journal-new-scheduled-entry
+    ; file prefix
+    "orff" 'org-roam-find-file
+    "orfi" 'org-roam-jump-to-index
+    )
+  (use-package org-download
+    :after org
+    :bind
+    (:map org-mode-map
+      (
+        ("C-c n Y" . org-download-screenshot)
+        ("C-c n y" . org-download-yank))))
+  ; Org
+  (require 'org-notify)
+  (org-notify-add 'default
+    '(:time "-1s" :period "20s" :duration 10 :actions -ding)
+    '(:time "15m" :period "2m" :duration 100 :actions -notify))
+  (org-notify-start)
   (setq
-    org-agenda-file-regexp "\\`[^.].*\\.org'\\|[0-9]+$"
-    org-journal-dir "~/org/journal"
+    org-export-coding-system 'utf-8
     org-directory "~/org"
-    org-agenda-files '("~/org/" "~/org/journal/")
+    org-agenda-file-regexp "\\`\\([^.].*\\.org\\)\\|\\([0-9]+\\)\\'"
+    org-agenda-files '("~/org/" "~/org/journal/" "~/org/roam/")
+    org-journal-date-prefix "#+TITLE: "
+    org-journal-file-format "%Y-%m-%d.org"
+    org-journal-dir "~/org/roam"
+    org-journal-date-format "%A, %Y-%m-%d"
     )
   )
 
@@ -554,5 +604,5 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(org-roam-link ((t (:inherit org-link :box (:line-width 1 :color "grey75" :style released-button))))))
 )
