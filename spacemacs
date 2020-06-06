@@ -531,8 +531,10 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (drag-stuff-mode t)
+  (unless (version< emacs-version "27")
+    (setq completion-styles (append completion-styles 'flex)))
   ; Keybindings
+  (drag-stuff-mode t)
   (global-set-key (kbd "C-S-k") 'drag-stuff-up)
   (global-set-key (kbd "C-S-j") 'drag-stuff-down)
   (spacemacs/set-leader-keys-for-major-mode 'ruby-mode "orf" 'rubocop-autocorrect-current-file)
@@ -570,11 +572,6 @@ before packages are loaded."
         ("C-c n Y" . org-download-screenshot)
         ("C-c n y" . org-download-yank))))
   ; Org
-  (require 'org-notify)
-  (org-notify-add 'default
-    '(:time "-1s" :period "20s" :duration 10 :actions -ding)
-    '(:time "15m" :period "2m" :duration 100 :actions -notify))
-  (org-notify-start)
   (setq
     org-export-coding-system 'utf-8
     org-directory "~/org"
