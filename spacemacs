@@ -538,19 +538,6 @@ before packages are loaded."
   (global-set-key (kbd "C-S-k") 'drag-stuff-up)
   (global-set-key (kbd "C-S-j") 'drag-stuff-down)
   (spacemacs/set-leader-keys-for-major-mode 'ruby-mode "orf" 'rubocop-autocorrect-current-file)
-  ; Org-roam
-  (use-package org-roam
-    :after org
-    :hook (org-mode . org-roam-mode)
-    :custom
-    (org-roam-directory "~/org/roam/")
-    :bind
-    ("C-c n l" . org-roam)
-    ("C-c n f" . org-roam-find-file)
-    ("C-c n i" . org-roam-insert)
-    ("C-c n g" . org-roam-graph-show)
-    ("C-c n j" . org-journal-new-entry))
-  (require 'org-roam-protocol)
   (spacemacs/set-leader-keys
     "ori" 'org-roam-insert
     "ort" 'org-journal-open-current-journal-file
@@ -572,16 +559,38 @@ before packages are loaded."
         ("C-c n Y" . org-download-screenshot)
         ("C-c n y" . org-download-yank))))
   ; Org
-  (setq
-    org-export-coding-system 'utf-8
-    org-directory "~/org"
-    org-agenda-file-regexp "\\`\\([^.].*\\.org\\)\\|\\([0-9]+\\)\\'"
-    org-agenda-files '("~/org/" "~/org/journal/" "~/org/roam/")
-    org-journal-date-prefix "#+TITLE: "
-    org-journal-file-format "%Y-%m-%d.org"
-    org-journal-dir "~/org/roam"
-    org-journal-date-format "%A, %Y-%m-%d"
-    )
+  (require 'org-roam-protocol)
+  (use-package org-roam
+    :after org
+    :hook (org-mode . org-roam-mode)
+    :bind
+    ("C-c n l" . org-roam)
+    ("C-c n f" . org-roam-find-file)
+    ("C-c n i" . org-roam-insert)
+    ("C-c n g" . org-roam-graph-show)
+    ("C-c n j" . org-journal-new-entry))
+  )
+  (let*
+      ((org-path
+        (if-let
+            ((org-env-path (getenv "ORGPATH")))
+            org-env-path
+          "~/org"
+          ))
+       (org-roam-path (expand-file-name "roam" org-path))
+       )
+    (print org-path)
+    (print org-roam-path)
+    (setq
+     org-export-coding-system 'utf-8
+     org-directory org-path
+     org-agenda-files (list org-path org-roam-path)
+     org-roam-directory org-roam-path
+     org-journal-dir org-roam-path
+     org-journal-date-prefix "#+TITLE: "
+     org-journal-file-format "%Y-%m-%d.org"
+     org-journal-date-format "%A, %Y-%m-%d"
+     )
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
