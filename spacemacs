@@ -38,8 +38,8 @@ This function should only modify configuration layer settings."
        ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
        ;; `M-m f e R' (Emacs style) to install them.
        ;; ----------------------------------------------------------------
-       ;; auto-completion
        ;; better-defaults
+       auto-completion
        (ruby :variables
          ruby-enable-enh-ruby-mode t
          ruby-version-manager 'rbenv
@@ -53,14 +53,18 @@ This function should only modify configuration layer settings."
        dotnet
        (csharp :variables
          csharp-backend 'lsp)
-       (javascript :variables
-         javascript-import-tool 'import-js)
+       ;; (javascript :variables
+       ;;   javascript-import-tool 'import-js)
        lsp
        git
        yaml
        html
        emacs-lisp
-       helm
+       ;; (helm :variables
+       ;;   helm-enable-auto-resize t)
+       (ivy :variables
+         ivy-re-builders-alist '((t . ivy--regex-fuzzy))
+         )
        (multiple-cursors :variables
          multiple-cursors-backend 'evil-mc)
        (shell :variables
@@ -102,6 +106,7 @@ This function should only modify configuration layer settings."
        activity-watch-mode
        drag-stuff
        org-roam
+       org-download
        )
 
    ;; A list of packages that cannot be updated.
@@ -530,14 +535,13 @@ before packages are loaded."
   ; Keybindings
   (global-set-key (kbd "C-S-k") 'drag-stuff-up)
   (global-set-key (kbd "C-S-j") 'drag-stuff-down)
-  (spacemacs/set-leader-keys-for-major-mode 'org-mode "o!" 'org-time-stamp-inactive)
+  (spacemacs/set-leader-keys-for-major-mode 'ruby-mode "orf" 'rubocop-autocorrect-current-file)
   ; Org-roam
   (use-package org-roam
     :after org
     :hook (org-mode . org-roam-mode)
     :custom
     (org-roam-directory "~/org/roam/")
-    (org-roam-completion-system 'helm)
     :bind
     ("C-c n l" . org-roam)
     ("C-c n f" . org-roam-find-file)
