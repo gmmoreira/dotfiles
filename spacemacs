@@ -53,15 +53,11 @@ This function should only modify configuration layer settings."
        dotnet
        (csharp :variables
          csharp-backend 'lsp)
-       ;; (javascript :variables
-       ;;   javascript-import-tool 'import-js)
        lsp
        git
        yaml
        html
        emacs-lisp
-       ;; (helm :variables
-       ;;   helm-enable-auto-resize t)
        (ivy :variables
          ivy-re-builders-alist '((t . ivy--regex-fuzzy))
          )
@@ -90,6 +86,20 @@ This function should only modify configuration layer settings."
          org-enable-hugo-support t
          )
        spacemacs-org
+       gmmoreira-ruby
+       gmmoreira-org
+       ;; auto-completion
+       ;; better-defaults
+       ;; (javascript :variables
+       ;;   javascript-import-tool 'import-js)
+       ;; (helm :variables
+       ;;   helm-enable-auto-resize t)
+       ;; (mu4e :variables
+       ;;   mu4e-installation-path "/usr/share/emacs/site-lisp/mu4e"
+       ;;   mu4e-use-maildirs-extension t
+       ;;   mu4e-enable-mode-line t
+       ;;   mu4e-enable-async-operations t
+       ;;   )
        ;; syntax-checking
        ;; version-control
        )
@@ -103,10 +113,9 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
     dotspacemacs-additional-packages
     '(
+       tern
        activity-watch-mode
        drag-stuff
-       org-roam
-       org-download
        )
 
    ;; A list of packages that cannot be updated.
@@ -533,64 +542,51 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (unless (version< emacs-version "27")
     (setq completion-styles (append completion-styles 'flex)))
-  ; Keybindings
-  (drag-stuff-mode t)
-  (global-set-key (kbd "C-S-k") 'drag-stuff-up)
-  (global-set-key (kbd "C-S-j") 'drag-stuff-down)
-  (spacemacs/set-leader-keys-for-major-mode 'ruby-mode "orf" 'rubocop-autocorrect-current-file)
-  (spacemacs/set-leader-keys
-    "ori" 'org-roam-insert
-    "ort" 'org-journal-open-current-journal-file
-    "orl" 'org-roam
-    "org" 'org-roam-graph
-    "orbb" 'org-roam-switch-to-buffer
-    ; journal
-    "orjj" 'org-journal-new-entry
-    "orjt" 'org-journal-new-scheduled-entry
-    ; file prefix
-    "orff" 'org-roam-find-file
-    "orfi" 'org-roam-jump-to-index
-    )
-  (use-package org-download
-    :after org
+  (use-package drag-stuff
+    :config
+    (drag-stuff-mode t)
     :bind
-    (:map org-mode-map
-      (
-        ("C-c n Y" . org-download-screenshot)
-        ("C-c n y" . org-download-yank))))
-  ; Org
-  (require 'org-roam-protocol)
-  (use-package org-roam
-    :after org
-    :hook (org-mode . org-roam-mode)
-    :bind
-    ("C-c n l" . org-roam)
-    ("C-c n f" . org-roam-find-file)
-    ("C-c n i" . org-roam-insert)
-    ("C-c n g" . org-roam-graph-show)
-    ("C-c n j" . org-journal-new-entry))
-  )
-  (let*
-      ((org-path
-        (if-let
-            ((org-env-path (getenv "ORGPATH")))
-            org-env-path
-          "~/org"
-          ))
-       (org-roam-path (expand-file-name "roam" org-path))
-       )
-    (print org-path)
-    (print org-roam-path)
-    (setq
-     org-export-coding-system 'utf-8
-     org-directory org-path
-     org-agenda-files (list org-path org-roam-path)
-     org-roam-directory org-roam-path
-     org-journal-dir org-roam-path
-     org-journal-date-prefix "#+TITLE: "
-     org-journal-file-format "%Y-%m-%d.org"
-     org-journal-date-format "%A, %Y-%m-%d"
-     )
+    ("C-S-k" . drag-stuff-up)
+    ("C-S-j" . drag-stuff-down))
+  ;; ; Mu4e - email client
+  ;; (setq mu4e-maildir "~/.mail/work"
+  ;;   mu4e-trash-folder "/Trash"
+  ;;   mu4e-refile-folder "/Archive"
+  ;;   mu4e-sent-folder "/Sent"
+  ;;   mu4e-drafts-folder "/Drafts"
+  ;;   mu4e-change-filenames-when-moving t
+  ;;   mu4e-view-show-images t
+  ;;   mu4e-view-show-addresses t
+  ;;   mu4e-enable-notifications t
+  ;;   mu4e-sent-messages-behavior 'delete
+  ;;   message-kill-buffer-on-exit t
+  ;;   mu4e-view-prefer-html t
+  ;;   )
+  ;; (with-eval-after-load 'mu4e-alert
+  ;;   ;; Enable Desktop notifications
+  ;;   (mu4e-alert-set-default-style 'notifications)) ; For Linux.
+  ;; (require 'smtpmail)
+  ;; (setq
+  ;;   mu4e-contexts
+  ;;   `( ,(make-mu4e-context
+  ;;         :name "Work"
+  ;;         :enter-func (lambda () (mu4e-message "Entering Work context"))
+  ;;         :leave-func (lambda () (mu4e-message "Leaving Work context"))
+  ;;         :match-func (lambda (msg)
+  ;;                       (when msg
+  ;;                         (mu4e-message-contact-field-matches-me)))
+  ;;         :vars '( ( user-mail-address . "guilherme.moreira@locaweb.com.br" )
+  ;;                  ( user-full-name . "Guilherme Moreira" )
+  ;;                  ( message-send-mail-function . 'smtpmail-send-it )
+  ;;                  ( smtpmail-default-smtp-server . "localhost" )
+  ;;                  ( smtpmail-smtp-server . "localhost" )
+  ;;                  ( smtpmail-smtp-service . 1025 )
+  ;;                  ( smtpmail-smtp-user . "guilherme.moreira")
+  ;;                  )
+  ;;         )
+  ;;      )
+  ;;   mu4e-context-policy 'pick-first
+  ;;   )
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
