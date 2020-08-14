@@ -1,9 +1,25 @@
 [user]
-  name = Guilherme Moreira
-  email = guilhermerx7@gmail.com
+	name = Guilherme Moreira
+	email = guilhermerx7@gmail.com
 [includeIf "gitdir:~/workspace/"]
-  path = .gitconfig-personal
+	path = .gitconfig-personal
 [includeIf "gitdir:~/workspace/work/"]
-  path = .gitconfig-work
+	path = .gitconfig-work
 [core]
-  excludesFile = ~/.gitignore
+	excludesFile = ~/.gitignore
+	editor = nvim
+[commit]
+	verbose = true
+[diff]
+	tool = nvimdiff2
+[difftool "nvimdiff2"]
+	cmd = nvim -d $LOCAL $REMOTE
+[merge]
+	tool = nvimdiff4
+[mergetool]
+	keepBackup = false
+[mergetool "nvimdiff4"]
+	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[alias]
+	pf = push --force-with-lease
+	fop = fetch origin -p
