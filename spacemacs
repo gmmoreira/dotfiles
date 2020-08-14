@@ -39,9 +39,20 @@ This function should only modify configuration layer settings."
        ;; `M-m f e R' (Emacs style) to install them.
        ;; ----------------------------------------------------------------
        ;; better-defaults
-       auto-completion
+       git
+       systemd
+       csv
+       html
+       json
+       sql
+       yaml
+       lsp
+       crystal
+       dotnet
+       (csharp :variables
+         csharp-backend 'lsp)
+       emacs-lisp
        (ruby :variables
-         ruby-enable-enh-ruby-mode t
          ruby-version-manager 'rbenv
          ruby-backend 'lsp
          ruby-enable-enh-ruby-mode nil
@@ -49,15 +60,7 @@ This function should only modify configuration layer settings."
          ruby-insert-encoding-magic-comment nil
          enh-ruby-add-encoding-comment-on-save nil)
        ruby-on-rails
-       crystal
-       dotnet
-       (csharp :variables
-         csharp-backend 'lsp)
-       lsp
-       git
-       yaml
-       html
-       emacs-lisp
+       gmmoreira-ruby
        (ivy :variables
          ivy-re-builders-alist '((t . ivy--regex-fuzzy))
          )
@@ -86,22 +89,10 @@ This function should only modify configuration layer settings."
          org-enable-hugo-support t
          )
        spacemacs-org
-       gmmoreira-ruby
        gmmoreira-org
-       ;; auto-completion
-       ;; better-defaults
-       ;; (javascript :variables
-       ;;   javascript-import-tool 'import-js)
-       ;; (helm :variables
-       ;;   helm-enable-auto-resize t)
-       ;; (mu4e :variables
-       ;;   mu4e-installation-path "/usr/share/emacs/site-lisp/mu4e"
-       ;;   mu4e-use-maildirs-extension t
-       ;;   mu4e-enable-mode-line t
-       ;;   mu4e-enable-async-operations t
-       ;;   )
-       ;; syntax-checking
-       ;; version-control
+       auto-completion
+       syntax-checking
+       prettier
        )
 
    ;; List of additional packages that will be installed without being
@@ -254,7 +245,7 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light)
+                          spacemacs-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -502,6 +493,15 @@ It should only modify the values of Spacemacs settings."
    ;; (default t)
    dotspacemacs-use-clean-aindent-mode t
 
+   ;; If non-nil activate `snoopy-mode' which shifts your number row
+   ;; to match the set of signs given in `dotspacemacs-snoopy-keyrow'
+   ;; in programming modes (insert-mode only). (default nil)
+   dotspacemacs-use-snoopy-mode nil
+
+   ;; Text of shifted values from your
+   ;; keyboard's number row. (default '!@#$%^&*()')
+   dotspacemacs-snoopy-keyrow "!@#$%^&*()"
+
    ;; Either nil or a number of seconds. If non-nil zone out after the specified
    ;; number of seconds. (default nil)
    dotspacemacs-zone-out-when-idle nil
@@ -509,7 +509,11 @@ It should only modify the values of Spacemacs settings."
    ;; Run `spacemacs/prettify-org-buffer' when
    ;; visiting README.org files of Spacemacs.
    ;; (default nil)
-   dotspacemacs-pretty-docs nil))
+   dotspacemacs-pretty-docs nil
+
+   ;; If nil the home buffer shows the full path of agenda items
+   ;; and todos. If non nil only the file name is shown.
+   dotspacemacs-home-shorten-agenda-source nil))
 
 (defun dotspacemacs/user-env ()
   "Environment variables setup.
@@ -541,52 +545,15 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (unless (version< emacs-version "27")
-    (setq completion-styles (append completion-styles 'flex)))
+    (setq completion-styles (append completion-styles '(flex))))
   (use-package drag-stuff
     :config
     (drag-stuff-mode t)
     :bind
     ("C-S-k" . drag-stuff-up)
     ("C-S-j" . drag-stuff-down))
-  ;; ; Mu4e - email client
-  ;; (setq mu4e-maildir "~/.mail/work"
-  ;;   mu4e-trash-folder "/Trash"
-  ;;   mu4e-refile-folder "/Archive"
-  ;;   mu4e-sent-folder "/Sent"
-  ;;   mu4e-drafts-folder "/Drafts"
-  ;;   mu4e-change-filenames-when-moving t
-  ;;   mu4e-view-show-images t
-  ;;   mu4e-view-show-addresses t
-  ;;   mu4e-enable-notifications t
-  ;;   mu4e-sent-messages-behavior 'delete
-  ;;   message-kill-buffer-on-exit t
-  ;;   mu4e-view-prefer-html t
-  ;;   )
-  ;; (with-eval-after-load 'mu4e-alert
-  ;;   ;; Enable Desktop notifications
-  ;;   (mu4e-alert-set-default-style 'notifications)) ; For Linux.
-  ;; (require 'smtpmail)
-  ;; (setq
-  ;;   mu4e-contexts
-  ;;   `( ,(make-mu4e-context
-  ;;         :name "Work"
-  ;;         :enter-func (lambda () (mu4e-message "Entering Work context"))
-  ;;         :leave-func (lambda () (mu4e-message "Leaving Work context"))
-  ;;         :match-func (lambda (msg)
-  ;;                       (when msg
-  ;;                         (mu4e-message-contact-field-matches-me)))
-  ;;         :vars '( ( user-mail-address . "guilherme.moreira@locaweb.com.br" )
-  ;;                  ( user-full-name . "Guilherme Moreira" )
-  ;;                  ( message-send-mail-function . 'smtpmail-send-it )
-  ;;                  ( smtpmail-default-smtp-server . "localhost" )
-  ;;                  ( smtpmail-smtp-server . "localhost" )
-  ;;                  ( smtpmail-smtp-service . 1025 )
-  ;;                  ( smtpmail-smtp-user . "guilherme.moreira")
-  ;;                  )
-  ;;         )
-  ;;      )
-  ;;   mu4e-context-policy 'pick-first
-  ;;   )
+  ;; Fix evil-iedit-state until package is updated
+  (defalias 'iedit-cleanup 'iedit-lib-cleanup)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -601,10 +568,9 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-  '(package-selected-packages
-     (quote
-       (drag-stuff play-crystal ob-crystal inf-crystal flycheck-crystal crystal-mode ameba activity-watch-mode treemacs-magit smeargle magit-svn magit-gitflow magit-popup helm-gitignore helm-git-grep gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit undo-tree transient plantuml-mode xterm-color vterm terminal-here shell-pop multi-term eshell-z eshell-prompt-extras esh-help omnisharp csharp-mode dotnet yapfify yaml-mode utop tuareg caml pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements ocp-indent ob-elixir nodejs-repl mvn meghanada maven-test-mode lsp-python-ms python lsp-java livid-mode skewer-mode live-py-mode json-navigator hierarchy json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc importmagic epc ctable concurrent deferred helm-pydoc groovy-mode groovy-imports pcache gradle-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-commit with-editor git-gutter flycheck-ocaml merlin flycheck-mix flycheck-credo emojify emoji-cheat-sheet-plus dune diff-hl cython-mode company-tern tern company-emoji company-anaconda browse-at-remote blacken auto-complete-rst anaconda-mode pythonic alchemist elixir-mode web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode prettier-js impatient-mode htmlize simple-httpd helm-css-scss haml-mode emmet-mode counsel-css company-web web-completion-data add-node-modules-path flyspell-correct-helm flyspell-correct auto-dictionary projectile-rails inflections feature-mode yasnippet-snippets lsp-ui lsp-treemacs helm-lsp helm-company helm-c-yasnippet fuzzy flycheck-pos-tip pos-tip company-statistics company-lsp auto-yasnippet yasnippet ac-ispell auto-complete seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rbenv rake minitest helm-gtags ggtags enh-ruby-mode dap-mode bui tree-mode lsp-mode markdown-mode dash-functional counsel-gtags counsel swiper ivy company chruby bundler inf-ruby ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer org-plus-contrib org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
- '(safe-local-variable-values (quote ((ruby-backend (quote lsp)) (ruby-backend . lsp)))))
+ '(package-selected-packages
+   '(csv-mode sql-indent systemd mutant doom-themes tide typescript-mode helm helm-core drag-stuff play-crystal ob-crystal inf-crystal flycheck-crystal crystal-mode ameba activity-watch-mode treemacs-magit smeargle magit-svn magit-gitflow magit-popup helm-gitignore helm-git-grep gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit undo-tree transient plantuml-mode xterm-color vterm terminal-here shell-pop multi-term eshell-z eshell-prompt-extras esh-help omnisharp csharp-mode dotnet yapfify yaml-mode utop tuareg caml pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements ocp-indent ob-elixir nodejs-repl mvn meghanada maven-test-mode lsp-python-ms python lsp-java livid-mode skewer-mode live-py-mode json-navigator hierarchy json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc importmagic epc ctable concurrent deferred helm-pydoc groovy-mode groovy-imports pcache gradle-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-commit with-editor git-gutter flycheck-ocaml merlin flycheck-mix flycheck-credo emojify emoji-cheat-sheet-plus dune diff-hl cython-mode company-tern tern company-emoji company-anaconda browse-at-remote blacken auto-complete-rst anaconda-mode pythonic alchemist elixir-mode web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode prettier-js impatient-mode htmlize simple-httpd helm-css-scss haml-mode emmet-mode counsel-css company-web web-completion-data add-node-modules-path flyspell-correct-helm flyspell-correct auto-dictionary projectile-rails inflections feature-mode yasnippet-snippets lsp-ui lsp-treemacs helm-lsp helm-company helm-c-yasnippet fuzzy flycheck-pos-tip pos-tip company-statistics company-lsp auto-yasnippet yasnippet ac-ispell auto-complete seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rbenv rake minitest helm-gtags ggtags enh-ruby-mode dap-mode bui tree-mode lsp-mode markdown-mode dash-functional counsel-gtags counsel swiper ivy company chruby bundler inf-ruby ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer org-plus-contrib org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line))
+ '(safe-local-variable-values '((ruby-backend 'lsp) (ruby-backend . lsp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
