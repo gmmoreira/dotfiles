@@ -50,4 +50,4 @@
 ;(unpin! t)
 
 (package! vue-mode)
-(package! gherkin-mode)
+(package! feature-mode)
