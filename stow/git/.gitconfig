@@ -3,7 +3,7 @@
 	email = guilhermerx7@gmail.com
 [includeIf "gitdir:~/workspace/"]
 	path = .gitconfig-personal
-[includeIf "gitdir:~/workspace/work/"]
+[includeIf "gitdir:~/repositories/code.locaweb.com.br"]
 	path = .gitconfig-work
 [core]
 	excludesFile = ~/.gitignore
