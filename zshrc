@@ -123,14 +123,9 @@ else
   export MOZ_X11_EGL=1
 fi
 
-if command -v yarn > /dev/null 2&>1 ; then
-    export PATH="$(yarn global bin):$PATH"
-fi
-
 export PATH="$HOME/.doom.emacs.d/bin:$PATH"
 export EDITOR="emacsclient -c -q -a ''"
 export VISUAL="emacsclient -c -q -a ''"
-
 
 function self-signed-certificate() {
 	fqdn="$1"
@@ -168,3 +163,7 @@ function json-to-hash() {
 
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 [[ -f ~/.aliases ]] && source ~/.aliases
+[[ -d ~/go/bin ]] && export PATH="$HOME/go/bin:$PATH"
+if command -v yarn > /dev/null 2&>1 ; then
+    export PATH="$(yarn global bin):$PATH"
+fi

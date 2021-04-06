@@ -5,3 +5,8 @@ depends = []
 
 [zsh.files]
 zshrc = "~/.zshrc"
+
+[sway.files]
+sway_config = "~/.config/sway/config"
+sway_config_d = "~/.config/sway/config.d"
+waybar_config = "~/.config/waybar/config"

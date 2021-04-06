@@ -1,0 +1,8 @@
+# screenshots
+bindsym --release Print exec grimshot --notify save screen
+bindsym --release Shift+Print exec grimshot --notify save area
+bindsym --release Alt+Print exec grimshot --notify save active
+bindsym --release Ctrl+Print exec grimshot --notify copy screen
+bindsym --release Ctrl+Shift+Print exec grimshot --notify copy area
+bindsym --release Ctrl+Alt+Print exec grimshot --notify copy active
+
