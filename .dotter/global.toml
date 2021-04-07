@@ -10,3 +10,6 @@ zshrc = "~/.zshrc"
 sway_config = "~/.config/sway/config"
 sway_config_d = "~/.config/sway/config.d"
 waybar_config = "~/.config/waybar/config"
+
+[emacs.files]
+emacs_service_d = "~/.config/systemd/user/emacs.service.d"
