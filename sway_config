@@ -19,7 +19,7 @@ set $term x-terminal-emulator
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 # set $menu dmenu_path | dmenu | xargs swaymsg exec --
-set $menu wofi --show=drun --lines=5 --prompt=""
+set $menu wofi --insensitive --show=drun --lines=5 --prompt=""
 
 ### Output configuration
 #
@@ -268,8 +268,8 @@ include "~/.config/sway/config.d/*"
   for_window [app_id="firefox" title="Sharing Indicator"] inhibit_idle open
   for_window [app_id="firefox"] inhibit_idle fullscreen
 
-    exec wl-paste -t text --watch clipman store
-    exec wl-paste -p -t text --watch clipman store -P --histpath="~/.local/share/clipman-primary.json"
+    exec wl-paste -t text --watch clipman store --max-items=500
+    exec wl-paste -p -t text --watch clipman store -P --max-items=500 --histpath="~/.local/share/clipman-primary.json"
 
 bindsym --to-code {
 	$mod+Shift+p exec swaynag -t warning -m "Do you really want to power off?" \
