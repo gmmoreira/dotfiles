@@ -51,3 +51,5 @@
 
 (package! vue-mode)
 (package! feature-mode)
+(package! evil-matchit)
+(package! evil-ruby-text-objects)

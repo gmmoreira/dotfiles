@@ -13,3 +13,4 @@ waybar_config = "~/.config/waybar/config"
 
 [emacs.files]
 emacs_service_d = "~/.config/systemd/user/emacs.service.d"
+doom_d = "~/.doom.d"

@@ -56,3 +56,10 @@
 (modify-syntax-entry ?_ "w")
 
 (add-hook 'vue-mode-hook #'lsp!)
+
+(dolist (hook '(ruby-mode-hook enh-ruby-mode-hook))
+    (add-hook hook 'turn-on-evil-matchit-mode)
+    (add-hook hook 'evil-ruby-text-objects-mode))
+
+(map! :leader
+      :nv "v" #'er/expand-region)
