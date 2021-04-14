@@ -153,7 +153,11 @@ function set-dotnet-vars {
 set-dotnet-vars
 
 function json-to-hash() {
-	  ruby -rjson -rpp -e 'pp JSON.parse(STDIN.read)'
+	ruby -rjson -rpp -e 'pp JSON.parse(STDIN.read)'
+}
+
+function hash-to-json() {
+	ruby -rjson -e 'h = eval(STDIN.read); puts JSON.pretty_generate(h)'
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
