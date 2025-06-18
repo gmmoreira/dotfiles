@@ -1,0 +1,54 @@
+set incsearch
+set hlsearch
+set ignorecase
+set showmode
+set relativenumber
+set number
+set surround
+set commentary
+set ideajoin
+set easymotion
+set NERDTree
+set sneak
+
+let mapleader = " "
+
+nnoremap <leader>ff :action GotoFile<CR>
+nnoremap <leader>fD :action SafeDelete<CR>
+nnoremap <leader>mrr :action Refactorings.QuickListPopupAction<CR>
+nnoremap <leader>mF :action ReformatCode<CR>
+nnoremap <leader>mrF :action ReformatCode<CR>
+vnoremap <leader>mrF :action ReformatCode<CR>
+nnoremap <leader>mtt :action GotoTest<CR>
+nnoremap <leader>mtv :action RunClass<CR>
+nnoremap <leader>bd :action CloseContent<CR>
+nnoremap <leader>bn :action NextTab<CR>
+nnoremap <leader>bp :action PreviousTab<CR>
+nnoremap <leader>pf :action GotoClass<CR>
+nnoremap <leader>op :NERDTreeToggle<CR>
+" nnoremap <leader>op :action SelectInProjectView<CR>
+nnoremap <leader>/ :action FindInPath<CR>
+nnoremap <Esc><Esc> :nohl<CR>
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+nnoremap <leader>cr :action RenameElement<CR>
+nnoremap <leader>cu :action ShowUsages<CR>
+nnoremap <leader>cD :action ShowUsages<CR>
+nnoremap <leader>cd :action GotoDeclaration<CR>
+nnoremap <leader>cd :action GotoImplementation<CR>
+nnoremap <leader>mrc :action ChooseRunConfiguration<CR>
+nnoremap <leader>mrr :action Run<CR>
+nnoremap <leader>mrd :action Debug<CR>
+nnoremap <M-Up> :action MoveStatementUp<CR>
+nnoremap <M-Down> :action MoveStatementDown<CR>
+" nnoremap <leader>op :action ActivateProjectToolWindow<CR>
+" nnoremap <leader>pfu :action FindUsages<CR>
+
+nnoremap yy "+yy
+vnoremap y "+y
+
+nnoremap p "+p
+vnoremap p "+p
+nnoremap P "+P
+vnoremap P "+P
+nnoremap dd "+dd
+vnoremap d "+d
