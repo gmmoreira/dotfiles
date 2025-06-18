@@ -1,5 +1,6 @@
 - clean: ["~"]
 - link:
     ~/.ideavimrc: ideavimrc
+    ~/.config/nvim: lazyvim
 - shell:
     - git submodule update --init --remote
